@@ -665,7 +665,7 @@
                 "name": "Standard"
             },
             "copy": {
-                "count": "[if(not(equals(variables('numberOfExternalIps'), 0)), variables('numberOfExternalIps'), 1)]",
+                "count": "[variables('numberOfExternalIps')]",
                 "name": "extpipcopy"
             },
             "location": "[variables('location')]",
@@ -777,7 +777,7 @@
                     {
                         "name": "[concat(variables('resourceGroupName'), '-ext-ipconfig0')]",
                         "properties": {
-                            "loadBalancerBackendAddressPools": "[if(equals(variables('numberOfExternalIps'), 0), take(variables('backEndAddressPoolArray'), 0), take(variables('backEndAddressPoolArray'), 1))]",
+                            "loadBalancerBackendAddressPools": "[take(variables('backEndAddressPoolArray'), 1)]",
                             "primary": false,
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[concat(variables('extSubnetPrivateAddressPrefix'), variables('extSubnetPrivateAddressSuffix0'))]",
@@ -822,7 +822,7 @@
                     {
                         "name": "[concat(variables('resourceGroupName'), '-ext-ipconfig1')]",
                         "properties": {
-                            "loadBalancerBackendAddressPools": "[if(equals(variables('numberOfExternalIps'), 0), take(variables('backEndAddressPoolArray'), 0), take(variables('backEndAddressPoolArray'), 1))]",
+                            "loadBalancerBackendAddressPools": "[take(variables('backEndAddressPoolArray'), 1)]",
                             "primary": false,
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[concat(variables('extSubnetPrivateAddressPrefix'), variables('extSubnetPrivateAddressSuffix1'))]",
@@ -991,7 +991,7 @@
                 ],
                 "copy": [
                     {
-                        "count": "[if(not(equals(variables('numberOfExternalIps'), 0)), variables('numberOfExternalIps'), 1)]",
+                        "count": "[variables('numberOfExternalIps')]",
                         "input": {
                             "name": "[concat('loadBalancerFrontEnd', copyIndex('frontendIPConfigurations', 1))]",
                             "properties": {
