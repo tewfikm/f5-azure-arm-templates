@@ -41,7 +41,6 @@
         },
         "numberOfExternalIps": {
             "allowedValues": [
-                0,
                 1,
                 2,
                 3,
@@ -661,7 +660,6 @@
             "type": "Microsoft.Network/publicIPAddresses"
         },
         {
-            "condition": "[and(equals(parameters('provisionPublicIP'),'Yes'), not(equals(variables('numberOfExternalIps'),0)))]",
             "apiVersion": "[variables('networkApiVersion')]",
             "sku": {
                 "name": "Standard"
@@ -687,7 +685,7 @@
             "dependsOn": [
                 "[variables('mgmtNsgID')]",
                 "[concat('Microsoft.Network/loadBalancers/', variables('externalLoadBalancerName'))]",
-                "[concat('Microsoft.Network/publicIPAddresses/', variables('mgmtPublicIPAddressName'), '0')]"
+                "[ResourceId('Microsoft.Network/publicIPAddresses/', concat(variables('mgmtPublicIPAddressName'),'0'))]"
             ],
             "location": "[variables('location')]",
             "name": "[concat(variables('mgmtNicName'), '0')]",
@@ -722,7 +720,7 @@
             "dependsOn": [
                 "[variables('mgmtNsgID')]",
                 "[concat('Microsoft.Network/loadBalancers/', variables('externalLoadBalancerName'))]",
-                "[concat('Microsoft.Network/publicIPAddresses/', variables('mgmtPublicIPAddressName'), '1')]"
+                "[ResourceId('Microsoft.Network/publicIPAddresses/', concat(variables('mgmtPublicIPAddressName'),'1'))]"
             ],
             "location": "[variables('location')]",
             "name": "[concat(variables('mgmtNicName'), '1')]",
@@ -977,7 +975,6 @@
         },
         {
             "apiVersion": "[variables('networkApiVersion')]",
-            "condition": "[not(equals(variables('numberOfExternalIps'),0))]",
             "dependsOn": [
                 "extpipcopy"
             ],
